@@ -107,7 +107,6 @@ GameObject:
   - component: {fileID: 50985595938137970}
   - component: {fileID: 61627172658033346}
   - component: {fileID: 58898546080759176}
-  - component: {fileID: 114208317006013580}
   - component: {fileID: 114786061896649252}
   - component: {fileID: 114169494002934568}
   m_Layer: 0
@@ -322,20 +321,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0.575}
   m_Radius: 0.45
---- !u!114 &114208317006013580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1967700575304692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58b4caa647497c944b737a366ee9040d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  runSpeed: 40
-  doubleJump: 1
 --- !u!114 &114786061896649252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,46 +333,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2249e34ff574b624d8abc4d772c9151a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 600
-  m_CrouchSpeed: 0.4
-  m_MovementSmoothing: 0.05
-  m_AirControl: 1
-  m_WhatIsGround:
-    serializedVersion: 2
-    m_Bits: 55
-  m_GroundCheck: {fileID: 4851920919256534}
-  m_CeilingCheck: {fileID: 4360676703089906}
-  m_CrouchDisableCollider: {fileID: 61627172658033346}
-  OnLandEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114208317006013580}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnLanding
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnCrouchEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114208317006013580}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnCrouching
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  rb: {fileID: 0}
+  moveSpeed: 0
+  Bullet: {fileID: 0}
+  health: 3
+  liveImages: []
+  cooldownTime: 0
+  iframeTime: 0
+  currentScore: 0
 --- !u!114 &114169494002934568
 MonoBehaviour:
   m_ObjectHideFlags: 0
