@@ -1,0 +1,4 @@
+interface pickupable
+{
+    void Pickup();
+}
