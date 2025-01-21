@@ -2,16 +2,17 @@
 
 public class AttackController : MonoBehaviour
 {
-    public int damage = 10;       // Amount of damage.
-    public float speed = 1f;      // Attack speed.
-    public float range = 1f;      // Attack radius that takes as its center the attackPoint.
+    public int damage = 10; // Amount of damage.
+    public float speed = 1f; // Attack speed.
+    public float range = 1f; // Attack radius that takes as its center the attackPoint.
     public Transform attackPoint; // Point from which to attack.
     public LayerMask whatIsEnemy; // A mask determining what is enemy to the character.
 
-    [HideInInspector] public bool isAttacking = false;
+    [HideInInspector]
+    public bool isAttacking = false;
 
     private Animator animator;
-
+    private bool canAttack = true;
 
     private void Awake()
     {
@@ -20,32 +21,48 @@ public class AttackController : MonoBehaviour
 
     public void Attack(bool a)
     {
-        // Determine if he is attacking.
-        isAttacking = a;
+        if (!canAttack)
+            return;
 
-        // Increase the speed of the animation based on the attack speed.
-        animator.SetFloat("AttackSpeed", speed);
-
-        animator.SetBool("IsAttacking", isAttacking);
+        if (a && !isAttacking)
+        {
+            isAttacking = true;
+            canAttack = false;
+            animator.SetFloat("AttackSpeed", speed);
+            animator.SetBool("IsAttacking", true);
+        }
     }
 
     public void Hit()
     {
         // Get a list with all enemies within range.
-        Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPoint.position, range, whatIsEnemy);
-
+        Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(
+            attackPoint.position,
+            range,
+            whatIsEnemy
+        );
 
         // It damages the enemies of the list.
         for (int i = 0; i < enemiesToDamage.Length; i++)
         {
-            //Hit enemy take damage here!
+            if (enemiesToDamage[i].GetComponent<WalkToPlayer>())
+            {
+                enemiesToDamage[i].GetComponent<WalkToPlayer>().hurtTimer = 0.1f;
+            }
+            else if (enemiesToDamage[i].GetComponent<PlayerControler>())
+            {
+                enemiesToDamage[i].GetComponent<PlayerControler>().hurttimer = 0.1f;
+            }
+            enemiesToDamage[i].GetComponent<Renderer>().material.color = Color.red;
+            enemiesToDamage[i].GetComponent<Health>().TakeDamage(damage);
         }
     }
 
     public void StopAttack()
     {
-        // Animation event to finish attacking.
-        Attack(false);
+        isAttacking = false;
+        canAttack = true;
+        animator.SetBool("IsAttacking", false);
     }
 
     // Draw the attack area.

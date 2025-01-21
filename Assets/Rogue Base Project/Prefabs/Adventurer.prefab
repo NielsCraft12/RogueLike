@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4360676703089906}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Celling Check
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4851920919256534}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground Check
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4706544371114292}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Attack Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,9 +107,10 @@ GameObject:
   - component: {fileID: 50985595938137970}
   - component: {fileID: 61627172658033346}
   - component: {fileID: 58898546080759176}
-  - component: {fileID: 114786061896649252}
   - component: {fileID: 114169494002934568}
-  m_Layer: 0
+  - component: {fileID: 1064190822490879061}
+  - component: {fileID: 5412642939681083993}
+  m_Layer: 6
   m_Name: Adventurer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -227,7 +228,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 3
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -321,26 +322,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0.575}
   m_Radius: 0.45
---- !u!114 &114786061896649252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1967700575304692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2249e34ff574b624d8abc4d772c9151a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  moveSpeed: 0
-  Bullet: {fileID: 0}
-  health: 3
-  liveImages: []
-  cooldownTime: 0
-  iframeTime: 0
-  currentScore: 0
 --- !u!114 &114169494002934568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,8 +340,40 @@ MonoBehaviour:
   attackPoint: {fileID: 4706544371114292}
   whatIsEnemy:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   isAttacking: 0
+--- !u!114 &1064190822490879061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967700575304692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24fb532b0edd7054ebfb6bf8cef75d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coins: 0
+  maxMoveSpeed: 5
+  crouchSpeed: 2
+  jumpForce: 7
+  isCrouching: 0
+  hurttimer: 0
+--- !u!114 &5412642939681083993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967700575304692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd2aabc49bd4a143a5118d2716695fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
 --- !u!1 &1975730589640250
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,8 +383,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4906936696404904}
-  m_Layer: 0
-  m_Name: Camera Follow
+  m_Layer: 6
+  m_Name: Camera Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -9,7 +9,6 @@ public class PingPongMovement : MonoBehaviour
 
     private Vector3 origin; // Point of origin
 
-
     private void Awake()
     {
         origin = transform.position;
@@ -26,7 +25,11 @@ public class PingPongMovement : MonoBehaviour
         while (Vector3.Distance(point, transform.position) > 1)
         {
             // Move to the point.
-            transform.position = Vector3.MoveTowards(transform.position, point, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                point,
+                speed * Time.deltaTime
+            );
 
             yield return null;
         }
@@ -46,7 +49,8 @@ public class PingPongMovement : MonoBehaviour
 
     private void Flip()
     {
-        if (!flip) return;
+        if (!flip)
+            return;
 
         // Multiply the player's x local scale by -1.
         Vector3 theScale = transform.localScale;
@@ -55,5 +59,4 @@ public class PingPongMovement : MonoBehaviour
 
         transform.localScale = theScale;
     }
-
 }
