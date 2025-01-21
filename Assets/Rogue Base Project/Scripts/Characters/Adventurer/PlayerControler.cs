@@ -29,9 +29,9 @@ public class PlayerControler : MonoBehaviour
     [SerializeField]
     private bool isCrouching = false;
 
-    bool canJump = true;
+    private bool canJump = true;
 
-    int amoutJumpt = 0;
+    private int amoutJumpt = 0;
 
     private BoxCollider2D standingCollider;
 
@@ -40,10 +40,19 @@ public class PlayerControler : MonoBehaviour
     private bool crouchButtonHeld = false;
 
     private AttackController attackController;
+    public bool isBowEquipped = false;  // New field for bow
+    [SerializeField]
+    private float bowChargeTime = 0.6f;  // Time needed to charge bow
+    private float currentBowCharge = 0f;
+    private bool isChargingBow = false;
+    [SerializeField]
+    private GameObject arrow;
+    [SerializeField]
+    private GameObject arrowSpawnPoint;
 
     public float hurttimer;
 
-    void Awake()
+    private void Awake()
     {
         standingCollider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
@@ -62,7 +71,7 @@ public class PlayerControler : MonoBehaviour
         playerInput.Disable();
     }
 
-    void Start()
+    private void Start()
     {
         playerInput.Player.Movement.performed += OnMovement;
         playerInput.Player.Movement.canceled += OnMovement;
@@ -70,6 +79,7 @@ public class PlayerControler : MonoBehaviour
         playerInput.Player.Crouch.performed += OnCrouch;
         playerInput.Player.Crouch.canceled += OnCrouch;
         playerInput.Player.Attack.performed += OnAttack;
+        playerInput.Player.Attack.canceled += OnAttackReleased;  // New handler
     }
 
     private bool CanStandUp()
@@ -113,9 +123,39 @@ public class PlayerControler : MonoBehaviour
 
     private void OnAttack(InputAction.CallbackContext context)
     {
-        if (!isCrouching && !attackController.isAttacking)
+        if (isCrouching || attackController.isAttacking) return;
+
+        if (isBowEquipped)
         {
-            attackController.Attack(true);
+            animator.SetBool("BowReady", true);
+            isChargingBow = true;
+            currentBowCharge = 0f;
+        }
+        else
+        {
+            Debug.Log("Melee attack");
+            attackController.Attack(true);  // Melee attack
+        }
+    }
+
+    private void OnAttackReleased(InputAction.CallbackContext context)
+    {
+        if (isBowEquipped && isChargingBow)
+        {
+            isChargingBow = false;
+            if (currentBowCharge >= bowChargeTime)
+            {
+                Debug.Log("Shot!!!!!!!!!!");
+                animator.SetBool("BowReady", false);
+                animator.SetTrigger("BowShoot");
+                Instantiate(arrow, arrowSpawnPoint.transform.position, arrowSpawnPoint.transform.rotation);
+                //   attackController.Attack(true);  // Ranged attack
+            }
+            else
+            {
+                animator.SetBool("BowReady", false);
+                Debug.Log("Charge not enough");
+            }
         }
     }
 
@@ -124,7 +164,7 @@ public class PlayerControler : MonoBehaviour
         attackController.StopAttack();
     }
 
-    void move()
+    private void move()
     {
         rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
 
@@ -172,7 +212,7 @@ public class PlayerControler : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         move();
 
@@ -209,9 +249,16 @@ public class PlayerControler : MonoBehaviour
                 hurttimer = 0;
             }
         }
+
+        // Add bow charging logic
+        if (isChargingBow)
+        {
+            currentBowCharge += Time.deltaTime;
+            // You might want to add visual feedback for bow charging here
+        }
     }
 
-    void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         // Draw the ceiling check raycast
         Gizmos.color = Color.red;
