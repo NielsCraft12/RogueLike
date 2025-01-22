@@ -36,6 +36,10 @@ public class Range_Enemy : WalkToPlayer
 
     public void Throw()
     {
-        Instantiate(Projectile, ShootingPoint.transform.position, quaternion.identity);
+        GameObject projectile = Instantiate(
+            Projectile,
+            ShootingPoint.transform.position,
+            quaternion.identity
+        );
     }
 }

@@ -249,7 +249,7 @@ MonoBehaviour:
   minDistance: 5
   attackRange: 10
   cooldownTime: 3
-  cooldown: 0
+  cooldown: 3
   hurtTimer: 0
   Projectile: {fileID: 4182074943753639656, guid: efb40cef46155ea40ad5493b6d458a48, type: 3}
   ShootingPoint: {fileID: 2668696121225453138}

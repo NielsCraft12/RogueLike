@@ -94,16 +94,15 @@ public class WalkToPlayer : Health
     {
         bool canAttack =
             distanceToPlayer <= attackRange && distanceToPlayer >= minDistance && cooldown <= 0;
-
         if (canAttack)
         {
+            cooldown = cooldownTime;
             animator.SetBool("IsAttacking", true);
             attackController.Attack(true);
             animator.SetFloat("Speed", 0);
             rb.linearVelocity = Vector2.zero;
-            cooldown = cooldownTime;
         }
-        else if (cooldown <= 0)
+        else if (!canAttack)
         {
             attackController.Attack(false);
         }

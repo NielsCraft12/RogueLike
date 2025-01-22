@@ -6,15 +6,19 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField]
     private int selectedSlot = 0;
+
     [SerializeField]
     List<GameObject> selected = new List<GameObject>();
+
     [SerializeField]
     private int itemAmount = 0;
+
     [SerializeField]
     private TMPro.TextMeshProUGUI itemAmountText;
 
     [SerializeField]
     private GameObject player;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -27,8 +31,6 @@ public class Inventory : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-
-
         itemAmountText.text = itemAmount.ToString();
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
 

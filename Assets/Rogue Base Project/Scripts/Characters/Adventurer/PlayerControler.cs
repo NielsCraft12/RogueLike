@@ -40,13 +40,16 @@ public class PlayerControler : MonoBehaviour
     private bool crouchButtonHeld = false;
 
     private AttackController attackController;
-    public bool isBowEquipped = false;  // New field for bow
+    public bool isBowEquipped = false; // New field for bow
+
     [SerializeField]
-    private float bowChargeTime = 0.6f;  // Time needed to charge bow
+    private float bowChargeTime = 0.6f; // Time needed to charge bow
     private float currentBowCharge = 0f;
     private bool isChargingBow = false;
+
     [SerializeField]
     private GameObject arrow;
+
     [SerializeField]
     private GameObject arrowSpawnPoint;
 
@@ -79,7 +82,7 @@ public class PlayerControler : MonoBehaviour
         playerInput.Player.Crouch.performed += OnCrouch;
         playerInput.Player.Crouch.canceled += OnCrouch;
         playerInput.Player.Attack.performed += OnAttack;
-        playerInput.Player.Attack.canceled += OnAttackReleased;  // New handler
+        playerInput.Player.Attack.canceled += OnAttackReleased; // New handler
     }
 
     private bool CanStandUp()
@@ -123,7 +126,8 @@ public class PlayerControler : MonoBehaviour
 
     private void OnAttack(InputAction.CallbackContext context)
     {
-        if (isCrouching || attackController.isAttacking) return;
+        if (isCrouching || attackController.isAttacking)
+            return;
 
         if (isBowEquipped)
         {
@@ -133,8 +137,8 @@ public class PlayerControler : MonoBehaviour
         }
         else
         {
-            Debug.Log("Melee attack");
-            attackController.Attack(true);  // Melee attack
+            // Debug.Log("Melee attack");
+            attackController.Attack(true); // Melee attack
         }
     }
 
@@ -145,16 +149,30 @@ public class PlayerControler : MonoBehaviour
             isChargingBow = false;
             if (currentBowCharge >= bowChargeTime)
             {
-                Debug.Log("Shot!!!!!!!!!!");
                 animator.SetBool("BowReady", false);
                 animator.SetTrigger("BowShoot");
-                Instantiate(arrow, arrowSpawnPoint.transform.position, arrowSpawnPoint.transform.rotation);
-                //   attackController.Attack(true);  // Ranged attack
+
+                // Get mouse position in world space
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(
+                    Mouse.current.position.ReadValue()
+                );
+                mousePos.z = 0;
+
+                // Calculate direction from spawn point to mouse
+                Vector2 direction = (mousePos - arrowSpawnPoint.transform.position).normalized;
+
+                GameObject arrowInstance = Instantiate(
+                    arrow,
+                    arrowSpawnPoint.transform.position,
+                    Quaternion.identity
+                );
+
+                // Pass the direction to the arrow
+                arrowInstance.GetComponent<Arrow>().SetDirection(direction);
             }
             else
             {
                 animator.SetBool("BowReady", false);
-                Debug.Log("Charge not enough");
             }
         }
     }
