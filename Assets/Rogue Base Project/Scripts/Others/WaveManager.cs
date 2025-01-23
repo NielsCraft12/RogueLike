@@ -6,13 +6,13 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour
 {
     [SerializeField]
-    private int currentWave;
+    public int currentWave;
 
     [SerializeField]
     private int maxEnemys;
 
     [SerializeField]
-    private int currentEnemies;
+    public int currentEnemies;
 
     [SerializeField]
     private bool isWaveActive;
@@ -32,6 +32,8 @@ public class WaveManager : MonoBehaviour
     [SerializeField]
     private ShopManager shopManager; // Reference to your shop manager
 
+    public List<GameObject> allEnemies = new List<GameObject>();
+
     void Start()
     {
         currentWave = 0;
@@ -49,7 +51,8 @@ public class WaveManager : MonoBehaviour
     private void StartNewWave()
     {
         currentWave++;
-        maxEnemys = CalculateEnemyCount();
+        maxEnemys = 1;
+        // maxEnemys = CalculateEnemyCount();
         currentEnemies = maxEnemys;
         isWaveActive = true;
         isShopOpen = false;
@@ -106,6 +109,8 @@ public class WaveManager : MonoBehaviour
             spawnPoints[randomSpawnPoint].position,
             Quaternion.identity
         );
+
+        allEnemies.Add(enemy);
         //  enemy.GetComponent<Enemy>()?.Initialize(this);
     }
 

@@ -87,6 +87,8 @@ public class WalkToPlayer : Health
             {
                 transform.localScale = new Vector3(Mathf.Sign(moveInput.x), 1, 1);
             }
+
+
         }
     }
 

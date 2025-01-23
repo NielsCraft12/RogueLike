@@ -46,7 +46,6 @@ GameObject:
   - component: {fileID: 5255637798980923888}
   - component: {fileID: 6115906070277164706}
   - component: {fileID: 7881239502855769731}
-  - component: {fileID: 3489528736779794442}
   m_Layer: 8
   m_Name: Goblin
   m_TagString: Enemy
@@ -223,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bff784427021f149a036a183b5bc3d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: -13
+  damage: 13
   speed: 1
   range: 1
   attackPoint: {fileID: 2141850890084951888}
@@ -245,24 +244,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  items:
+  - {fileID: 1849319362467566, guid: d9b39dee9f99fe348a7bebbb5ca956db, type: 3}
+  - {fileID: 6017981513740550854, guid: cbb03c64ea5d55c4cac72145f27aff30, type: 3}
   moveSpeed: 5
   minDistance: 0
   attackRange: 2
   cooldownTime: 1
   cooldown: 0
   hurtTimer: 0
---- !u!114 &3489528736779794442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8256251401498368509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6298944b84ff28499ba81d6fabbe335, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items:
-  - {fileID: 4470241240140980284, guid: 252d5a09845e090499f55340981eb21f, type: 3}
-  - {fileID: 6017981513740550854, guid: cbb03c64ea5d55c4cac72145f27aff30, type: 3}

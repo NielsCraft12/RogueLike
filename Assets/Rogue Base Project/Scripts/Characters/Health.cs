@@ -1,5 +1,6 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Health : MonoBehaviour
 {
@@ -7,12 +8,15 @@ public class Health : MonoBehaviour
 
     [Title("Health")]
     [SerializeField]
-    protected int maxHealth = 100;
+    public int maxHealth = 100;
 
     [SerializeField]
     public int currentHealth;
 
     protected Animator animator;
+
+    [SerializeField]
+    private List<GameObject> items = new List<GameObject>();
 
     protected virtual void Start()
     {
@@ -28,6 +32,25 @@ public class Health : MonoBehaviour
             IsDead = true;
             animator.SetBool("IsDead", true);
             gameObject.layer = LayerMask.NameToLayer("Dead");
+
+            if (gameObject.CompareTag("Player"))
+            {
+                GameObject.FindAnyObjectByType<MenuManager>().GetComponent<MenuManager>().GameOver();
+
+            }
+
+            if (gameObject.CompareTag("Enemy"))
+            {
+                GameObject.FindAnyObjectByType<WaveManager>().GetComponent<WaveManager>().currentEnemies--;
+                int chance = Random.Range(1, 3);
+                if (chance == 1)
+                {
+                    int randomIndex = Random.Range(0, items.Count);
+                    Instantiate(items[randomIndex], transform.position, Quaternion.identity);
+                }
+            }
+
+
         }
     }
 

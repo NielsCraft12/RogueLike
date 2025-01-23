@@ -34,7 +34,7 @@ public class Range_Enemy : WalkToPlayer
         }
     }
 
-    public void Throw()
+    public virtual void Throw()
     {
         GameObject projectile = Instantiate(
             Projectile,

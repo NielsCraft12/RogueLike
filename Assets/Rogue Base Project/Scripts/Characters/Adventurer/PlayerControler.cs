@@ -1,4 +1,4 @@
-using System.Data.Common;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +8,7 @@ public class PlayerControler : MonoBehaviour
     private Vector2 moveInput;
     private Rigidbody2D rb;
 
-    private Animator animator;
+    public Animator animator;
 
     private float moveSpeed = 5f;
 
@@ -53,7 +53,12 @@ public class PlayerControler : MonoBehaviour
     [SerializeField]
     private GameObject arrowSpawnPoint;
 
+
+    public int BowDamage = 5;
+    public int SwordDamage = 10;
     public float hurttimer;
+
+    public int potionAmount = 0;
 
     private void Awake()
     {
@@ -83,6 +88,7 @@ public class PlayerControler : MonoBehaviour
         playerInput.Player.Crouch.canceled += OnCrouch;
         playerInput.Player.Attack.performed += OnAttack;
         playerInput.Player.Attack.canceled += OnAttackReleased; // New handler
+        playerInput.Player.Use.performed += GameObject.FindFirstObjectByType<Inventory>().OnUseItem; // New handler
     }
 
     private bool CanStandUp()
@@ -137,6 +143,7 @@ public class PlayerControler : MonoBehaviour
         }
         else
         {
+            gameObject.GetComponent<AttackController>().damage = SwordDamage;
             // Debug.Log("Melee attack");
             attackController.Attack(true); // Melee attack
         }
@@ -169,6 +176,7 @@ public class PlayerControler : MonoBehaviour
 
                 // Pass the direction to the arrow
                 arrowInstance.GetComponent<Arrow>().SetDirection(direction);
+                arrowInstance.GetComponent<AttackController>().damage = BowDamage;
             }
             else
             {
